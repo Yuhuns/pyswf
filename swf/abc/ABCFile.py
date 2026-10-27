@@ -346,7 +346,8 @@ class ABCFile:
             interfaceCount = stream.readU30()
             for _ in range(interfaceCount):
                 interface = self.getMultiname(stream.readU30())
-                if not isinstance(interface, Multiname):
+                # la spec demande un Multiname, mais certains compilateurs ecrivent un QName
+                if not isinstance(interface, (Multiname, QName)):
                     raise Exception("interface is not a Multiname")
 
                 cls.interfaces.append(interface)
